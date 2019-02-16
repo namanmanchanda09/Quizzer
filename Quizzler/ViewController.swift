@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     var number: Int = 0
     var pickedAnswer: Bool = false
+    var score: Int = 0
     
 
     
@@ -27,6 +28,8 @@ class ViewController: UIViewController {
         
         
         questionLabel.text = QuestionBank().list[number].questionText
+        scoreLabel.text = "Score : 0"
+        progressLabel.text = "1/13"
         
         
     
@@ -48,13 +51,14 @@ class ViewController: UIViewController {
     }
     
     func updateUI() {
+        scoreLabel.text = "Score: \(score)"
+        progressLabel.text = "\(number+2)/13"
+        progressBar.frame.size.width = (view.frame.size.width/13) * CGFloat(number+1)
         
         
-    
         
-        
-      
     }
+    
     
 
     func nextQuestion() {
@@ -82,8 +86,11 @@ class ViewController: UIViewController {
         
         if pickedAnswer == QuestionBank().list[number].answer {
             print("Correct")
+            score += 1
+            updateUI()
         }else{
             print("Incorrect")
+            updateUI()
         }
         
         
@@ -94,6 +101,8 @@ class ViewController: UIViewController {
     
     func startOver() {
         number = 0
+        score = 0
+        updateUI()
         nextQuestion()
        
     }
